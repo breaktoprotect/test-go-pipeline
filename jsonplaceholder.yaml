@@ -1,0 +1,19 @@
+swagger: "2.0"
+info:
+  title: JSON Placeholder Typicode
+  description: API description in Markdown.
+  version: 1.0.0
+host: jsonplaceholder.typicode.com
+basePath: /
+schemes:
+  - https
+paths:
+  /todos:
+    get:
+      summary: Returns a list of todos.
+      description: Optional extended description in Markdown.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
