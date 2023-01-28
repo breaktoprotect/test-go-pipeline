@@ -10,7 +10,7 @@ import (
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
-	"test-go-pipeline/internal/simpleHttpClient/generated/client/todos"
+	"test-go-pipeline/internal/simplehttpclient/generated/client/todos"
 )
 
 // Default todos HTTP client.

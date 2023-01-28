@@ -1,4 +1,4 @@
-package simpleHttpClient
+package simplehttpclient
 
 import (
 	"io/ioutil"

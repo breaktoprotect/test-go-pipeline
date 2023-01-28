@@ -1,49 +1,34 @@
-package simpleHttpClient
+package simplehttpclient
 
 import (
-	"context"
 	"fmt"
-	"log"
-	"net/http"
-	jphclient "test-go-pipeline/internal/generated/jsonplaceholder/client"
+	"os"
 
-	"github.com/go-openapi/runtime"
+	"test-go-pipeline/internal/simplehttpclient/generated/client"
+	"test-go-pipeline/internal/simplehttpclient/generated/client/todos"
+
+	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 )
 
-var apiHostname = "https://jsonplaceholder.typicode.com"
-var endpointTodo = "/todos"
+func GoOpenApiClient() {
+	// Create a transport
+	transport := httptransport.New(os.Getenv("TODO_HOSTNAME"), "", nil)
 
-type Todo struct {
-	userId    string `json:"userId"`
-	id        string `json:"id"`
-	title     string `json:"title"`
-	completed bool   `json:"completed"`
-}
+	// Initialize the client with the httpClient
+	c := client.New(transport, strfmt.Default)
 
-func GetTodo(id int) *Todo {
-	transport := runtime.New(http.DefaultClient, "http://jsonplaceholder.typicode.com", []string{"http"})
+	// Auth
+	//bearerTokenAuth := httptransport.BearerToken(os.Getenv("X-API-KEY"))
 
-	client := jphclient.New(transport, strfmt.Default)
-
-	ctx := context.Background()
-
-	params := client.NewGetTodosParams()
-
-	resp, err := client.Operations.GetTodos(ctx, params)
+	// Make the GET request to the /todos endpoint
+	params := todos.NewGetTodosListParams()
+	resp, err := c.Todos.GetTodosList(params)
 	if err != nil {
-		log.Fatalf("GetTodo() encountered an error when performing get request: %v", err)
+		fmt.Fprintf(os.Stderr, "Failed to make GET request: %s\n", err)
+		os.Exit(1)
 	}
 
-	fmt.Println(resp)
-
-	// Convert JSON response to struct
-	/* var todo Todo
-	err = json.Unmarshal(resp.Payload, &todo)
-	if err != nil {
-		log.Fatalf("GetTodo() failed to unmarshal JSON: %v", err)
-	}
-	return &todo*/
-
-	return resp.Payload
+	// Print the response
+	fmt.Println(resp.Payload)
 }

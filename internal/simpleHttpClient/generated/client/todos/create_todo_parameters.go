@@ -15,7 +15,7 @@ import (
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
-	"test-go-pipeline/internal/simpleHttpClient/generated/models"
+	"test-go-pipeline/internal/simplehttpclient/generated/models"
 )
 
 // NewCreateTodoParams creates a new CreateTodoParams object,

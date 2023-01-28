@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 
-	"test-go-pipeline/internal/simpleHttpClient/generated/models"
+	"test-go-pipeline/internal/simplehttpclient/generated/models"
 )
 
 // GetTodoByIDReader is a Reader for the GetTodoByID structure.

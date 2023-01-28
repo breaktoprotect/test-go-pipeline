@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"test-go-pipeline/cmd/shapes"
-	"test-go-pipeline/internal/simpleHttpClient"
+	"test-go-pipeline/internal/simplehttpclient"
 )
 
 func main() {
@@ -15,10 +15,10 @@ func main() {
 	fmt.Println()
 
 	fmt.Println("[*] Welcome to net/http requests to httpbin.org")
-	simpleHttpClient.GetHttpBin()
+	simplehttpclient.GetHttpBin()
 
 	fmt.Println()
 
 	fmt.Println("[*] Welcome to go-openapi requests to jsonplaceholder.typicode.org")
-	simpleHttpClient.GetTodo()
+	simplehttpclient.GoOpenApiClient()
 }
