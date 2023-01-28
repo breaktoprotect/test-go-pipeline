@@ -7,9 +7,16 @@ host: jsonplaceholder.typicode.com
 basePath: /
 schemes:
   - https
+securityDefinitions:
+  key:
+    type: apiKey
+    in: header
+    name: x-api-key
 paths:
   /todos:
     get:
+      tags: ["Todos"]
+      operationId: getTodosList
       summary: Returns a list of todos.
       description: Optional extended description in Markdown.
       produces:
@@ -17,3 +24,94 @@ paths:
       responses:
         200:
           description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/item"
+        404:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+    post:
+      tags: ["Todos"]
+      operationId: createTodo
+      summary: Add a Todo
+      description: Optional
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/item"
+      produces:
+        - application/json
+      responses:
+        201:
+          description: Added
+          schema:
+            $ref: "#/definitions/item"
+        404:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+  /todos/{id}:
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+    get:
+      tags: ["Todos"]
+      operationId: getTodoById
+      summary: Return a specific todo item.
+      description: Optional extended description in Markdown.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/item"
+        404:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+    delete:
+      tags: ["Todos"]
+      operationId: deleteTodoById
+      summary: Delete an existing todo item
+      description: Optional
+      produces:
+        - application/json
+      responses:
+        200:
+          description: deleteTodoById
+          schema:
+            $ref: "#/definitions/item"
+        404:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+definitions:
+  item:
+    type: object
+    required:
+      - userId
+      - title
+      - completed
+    properties:
+      userId: 
+        type: integer
+        format: int64
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+      title:
+        type: string
+        minLength: 1
+      completed:
+        type: boolean
+  error:
+    type: 'null'
