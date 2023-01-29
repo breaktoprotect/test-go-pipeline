@@ -20,5 +20,5 @@ func main() {
 	fmt.Println()
 
 	fmt.Println("[*] Welcome to go-openapi requests to jsonplaceholder.typicode.org")
-	simplehttpclient.GoOpenApiClient()
+	simplehttpclient.RunTodoClientMain()
 }

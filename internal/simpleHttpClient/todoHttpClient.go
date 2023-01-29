@@ -9,11 +9,21 @@ import (
 
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+	"github.com/joho/godotenv"
 )
 
-func GoOpenApiClient() {
+func RunTodoClientMain() {
+	// Load env
+	err := godotenv.Load(".env")
+
 	// Create a transport
 	transport := httptransport.New(os.Getenv("TODO_HOSTNAME"), "", nil)
+
+	// Auth
+	transport.DefaultAuthentication = httptransport.BearerToken(os.Getenv("X_API_KEY"))
+
+	//debug
+	fmt.Printf("TODO_HOSTNAME: %s\n", os.Getenv("TODO_HOSTNAME"))
 
 	// Initialize the client with the httpClient
 	c := client.New(transport, strfmt.Default)
@@ -30,5 +40,14 @@ func GoOpenApiClient() {
 	}
 
 	// Print the response
-	fmt.Println(resp.Payload)
+	//fmt.Printf("%#v\n", resp.GetPayload()[0])
+
+	// Print a human-readable content
+	for _, item := range resp.GetPayload() {
+		fmt.Printf("%v - %v\n", *item.ID, *item.Title)
+		fmt.Printf("Created by user (userID): %v || ", *item.UserID)
+		fmt.Printf("Completed: %v\n", *item.Completed)
+		fmt.Println()
+	}
+
 }

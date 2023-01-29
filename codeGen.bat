@@ -1,0 +1,1 @@
+swagger generate client -f .\jsonplaceholder.yaml -A todos -t internal/simplehttpclient/generated
